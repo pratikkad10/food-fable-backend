@@ -1,5 +1,6 @@
 const { restaurantModel } = require("../models/restaurant.model");
 const { userModel } = require("../models/user.model");
+const mongoose=require('mongoose')
 
 //read
 async function allRestaurantHandler(req, res) {
@@ -172,18 +173,19 @@ async function reviewHandler(req, res) {
 
 //private restaurants
 async function fetchPrivateRestaurants(req,res) {
-  const ownerId=req.user.id;
+  const ownerId = req.user.id;
+
   try {
-    const restaurant=await restaurantModel.findOne({owner:ownerId});
+    const restaurants = await restaurantModel.find({ owner: ownerId }).populate("owner");
     res.json({
-      success:true,
-      restaurant:restaurant
-    })
+      success: true,
+      restaurants: restaurants,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to review restaurant. Please try again later.",
-      error:error
+      error:error.message
     });
   }
 }

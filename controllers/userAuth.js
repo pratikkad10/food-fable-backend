@@ -56,7 +56,7 @@ async function signinHandler(req, res) {
 
             const payload = {
               email:user.email,
-              id:user._id.toString(),
+              id: user._id.toString(),
               accountType:user.accountType
             }
             const token=jwt.sign(payload, process.env.JWT_SECRET_USER ,{expiresIn:"2h"});

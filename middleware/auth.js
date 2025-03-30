@@ -15,6 +15,8 @@ exports.auth = async (req, res, next) => {
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET_USER);
       req.user = decode;
+      console.log("User authenticated");
+      
     } catch (error) {
       res.status(500).json({
         success: false,
@@ -39,9 +41,9 @@ exports.ownerAuth = (req, res, next) => {
       return res.status(401).json({
         success: false,
         message: "This is protected route for owner!"
-      });
+      });  
     }
-
+    console.log(" is an owner");
     next();
   } catch (error) {
     res.status(500).json({

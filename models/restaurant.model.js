@@ -59,8 +59,9 @@ const restaurant = new mongoose.Schema({
     type: String,
   },
   owner: {
-    type: ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: "users",
   },
 });
 
