@@ -23,6 +23,6 @@ restaurantRoute.post("/review/:id", auth, userAuth, reviewHandler);
 
 restaurantRoute.get("/:id", getRestaurant);
 
-// restaurantRoute.get('/OwnerRestaurants',auth, ownerAuth, fetchPrivateRestaurants);
+restaurantRoute.get('/OwnerRestaurants',auth, ownerAuth, fetchPrivateRestaurants);
 
 module.exports = restaurantRoute;
