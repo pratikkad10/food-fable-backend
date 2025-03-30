@@ -21,8 +21,10 @@ restaurantRoute.delete("/delete/:id", auth, ownerAuth, deleteRestaurantHandler);
 
 restaurantRoute.post("/review/:id", auth, userAuth, reviewHandler);
 
+restaurantRoute.get('/owner',auth, ownerAuth, fetchPrivateRestaurants);
+
 restaurantRoute.get("/:id", getRestaurant);
 
-restaurantRoute.get('/OwnerRestaurants',auth, ownerAuth, fetchPrivateRestaurants);
+
 
 module.exports = restaurantRoute;

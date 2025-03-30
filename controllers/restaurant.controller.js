@@ -34,7 +34,7 @@ async function createNewRestaurantHandler(req, res) {
       email,
       website
     });
-    res.json({
+    res.status(200).json({
       success: true,
       restaurant: newRestaurant,
     });
@@ -171,24 +171,33 @@ async function reviewHandler(req, res) {
   }
 }
 
-//private restaurants
-async function fetchPrivateRestaurants(req,res) {
-  const ownerId = req.user.id;
 
+
+async function fetchPrivateRestaurants(req, res) {
   try {
-    const restaurants = await restaurantModel.find({ owner: ownerId }).populate("owner");
-    res.json({
-      success: true,
-      restaurants: restaurants,
-    });
+    const ownerId = req.user.id; 
+    const restaurants = await restaurantModel.find({ owner: ownerId });
+
+    if (!restaurants || restaurants.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No restaurants found for this owner.",
+        data: {
+          restaurants: [],
+        },
+      });
+    }
+
+    res.status(200).json({ success: true, data: restaurants });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Failed to review restaurant. Please try again later.",
-      error:error.message
+      message: "Failed to fetch restaurants. Please try again later.",
+      error,
     });
   }
 }
+
 
 //get restaurant by id
 async function getRestaurant(req,res){
