@@ -129,7 +129,7 @@ async function reviewHandler(req, res) {
     }
 
     const restaurant = await restaurantModel.findById(id);
-    console.log("restaurant is ", restaurant);
+    
     
     if (!restaurant) {
       return res.status(404).json({
