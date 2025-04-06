@@ -6,7 +6,8 @@ const {
   deleteRestaurantHandler,
   reviewHandler,
   getRestaurant,
-  fetchPrivateRestaurants
+  fetchPrivateRestaurants,
+  searchRestaurants
 } = require("../controllers/restaurant.controller");
 const { auth, ownerAuth, userAuth } = require("../middleware/auth");
 const restaurantRoute = express.Router();
@@ -24,6 +25,8 @@ restaurantRoute.post("/review/:id", auth, userAuth, reviewHandler);
 restaurantRoute.get('/owner',auth, ownerAuth, fetchPrivateRestaurants);
 
 restaurantRoute.get("/:id", getRestaurant);
+
+restaurantRoute.get("/find/:city",auth, searchRestaurants);
 
 
 

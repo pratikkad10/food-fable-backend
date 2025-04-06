@@ -4,8 +4,8 @@ require("dotenv").config();
 exports.auth = async (req, res, next) => {
 
   try {
-    // const token = req.headers["token"];
     const token = req.headers.authorization?.split(" ")[1];
+    
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -16,16 +16,18 @@ exports.auth = async (req, res, next) => {
     try {
       const decode = jwt.verify(token, process.env.JWT_SECRET_USER);
       req.user = decode;
+
+      next();
       
     } catch (error) {
-      res.status(500).json({
+     return res.status(500).json({
         success: false,
         message: "token is invalid!",
         error: error.message
       });
     }
 
-    next();
+    
   } catch (error) {
     res.status(500).json({
       success: false,
